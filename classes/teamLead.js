@@ -1,10 +1,10 @@
-import {WebProject, MobilProject} from './project.js';
-import {chooseTypeProject, chooseQuantityProjects, chooseDifficultProject} from '../func.js';
-import {webDepartment, mobilDepartment, testDepartment} from './department.js';
+import { WebProject, MobilProject } from './project.js';
+import { chooseTypeProject, chooseQuantityProjects, chooseDifficultProject } from '../func.js';
+import { webDepartment, mobilDepartment, testDepartment } from './department.js';
 import { MobDev, WebDev, TestDev } from './developer.js';
 
 
-export class teamLead {
+class TeamLead {
 
   // Метод служит для проверки очереди накопившихся проектов
   checkStack(department) {
@@ -50,7 +50,9 @@ export class teamLead {
 
     // Метод увольнения программиста
   removeDev(typeProject) {
-
+    // Мне жалко увольнять прогеров, на их месте могу быть я =(
   }
 }
 
+
+export let teamLead = new TeamLead();

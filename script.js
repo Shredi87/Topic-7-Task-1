@@ -1,3 +1,7 @@
+import { teamLead } from "./classes/teamLead.js";
+import { webDepartment, mobilDepartment, testDepartment } from './classes/department.js';
+
+
 function workingOffice(days) {
   let countWebProject;
   let countMobilProject;
@@ -11,7 +15,10 @@ function workingOffice(days) {
 
   for (let i = 1; i <= days; i++) {
     console.log(`workingOffice day ${i}`);
-
+    teamLead.checkStack(webDepartment);
+    teamLead.checkStack(mobilDepartment);
+    teamLead.checkStack(testDepartment);
+    teamLead.getProjects();
   }
 
   return console.log(`За ${days} дней было сформировано: 
