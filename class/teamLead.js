@@ -1,9 +1,11 @@
-import {WAIT_STACK_WEB, WAIT_STACK_MOBIL, WAIT_STACK_TEST, EVERYDAY_STACK_WEB, EVERYDAY_STACK_MOBIL} from '../const.js';
+import {WAIT_STACK_WEB, WAIT_STACK_MOBIL, WAIT_STACK_TEST} from '../const.js';
 import {WebProject, MobilProject} from './project.js';
 import {chooseTypeProject, chooseQuantityProjects, chooseDifficultProject} from '../func.js';
+import {webDepartment, mobilDepartment, testDepartment} from './department.js';
+import { MobDev, WebDev, TestDev } from './developer.js';
 
 export class teamLead {
-  
+
   // Метод служит для проверки очереди накопившихся проектов
   checkStack(stack) {
     let typeProject;
@@ -25,12 +27,12 @@ export class teamLead {
     } 
   }
 
-  // Метод найма программистов
+  // Метод найма программиста
   hireDev(typeProject) {
-
+    
   }
 
-  // Метод увольнения программистов
+  // Метод увольнения программиста
   removeDev(typeProject) {
 
   }
@@ -39,15 +41,15 @@ export class teamLead {
   getProjects() {
     let typeProject = chooseTypeProject();  // возвращает 'MOBIL' или 'WEB'
     let quantityProjects = chooseQuantityProjects(); // возвращает целое число от 0 до 4
-
+    // Прогоняем цикл на создание проектов в зависимости от количества проектов. Если количество проектов равно нуля - цикл не запускается.
     for (let i = 0; i < quantityProjects; i++) {
       let difficultProject = chooseDifficultProject(); // возвращает сложность для каждого проекта от 1 до 3
       if (typeProject === 'WEB') { // если тип проекта веб
         let project = new WebProject(difficultProject); // создаем новый веб проект с определенной выше сложностью
-        EVERYDAY_STACK_WEB.push(project); // и добавляем его в массив веб проектов созданных этим днем
+        webDepartment.stackWait.push(project); // и добавляем его в массив веб проектов созданных этим днем
       } else { // иначе тип проекта мобильный
         let project = new MobilProject(difficultProject); // создаем новый мобильный проект с определенной выше сложностью
-        EVERYDAY_STACK_MOBIL.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        mobilDepartment.stackWait.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
       }
     }
   }

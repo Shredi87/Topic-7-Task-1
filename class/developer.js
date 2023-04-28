@@ -1,5 +1,9 @@
 class Dev {
   #countProject
+  
+  constructor() {
+    this.#countProject = 0;
+  }
 
   get countProject() {
     return this.#countProject;
@@ -10,14 +14,20 @@ class Dev {
   }
 }
 
-class MobDev extends Dev {
-
+export class MobDev extends Dev {
+  constructor() {
+    super();
+  }
 }
 
-class WebDev extends Dev {
-
+export class WebDev extends Dev {
+  constructor() {
+    super();
+  }
 }
 
-class TestDev extends Dev {
-
+export class TestDev extends Dev {
+  constructor() {
+    super();
+  }
 }
