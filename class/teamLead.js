@@ -3,6 +3,7 @@ import {WebProject, MobilProject} from './project.js';
 import {chooseTypeProject, chooseQuantityProjects, chooseDifficultProject} from '../func.js';
 
 export class teamLead {
+  
   // Метод служит для проверки очереди накопившихся проектов
   checkStack(stack) {
     let typeProject;
@@ -24,13 +25,16 @@ export class teamLead {
     } 
   }
 
+  // Метод найма программистов
   hireDev(typeProject) {
 
   }
 
+  // Метод увольнения программистов
   removeDev(typeProject) {
 
   }
+
   // генерация новых проектов
   getProjects() {
     let typeProject = chooseTypeProject();  // возвращает 'MOBIL' или 'WEB'
@@ -46,7 +50,6 @@ export class teamLead {
         EVERYDAY_STACK_MOBIL.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
       }
     }
-
   }
 }
 

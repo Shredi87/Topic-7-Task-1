@@ -7,7 +7,7 @@ function randomInteger(min, max) {
   return Math.floor(rand);
 }
 
-//1. Выбор типа проектов
+// 1. Выбор типа проектов
 // Тип проектов поступивших в один день может быть только веб или только мобильные
 // где 0 - веб-проекты, а 1 - мобильные проекты.
 export function chooseTypeProject() {
@@ -26,4 +26,3 @@ export function chooseDifficultProject() {
   let difficultProject = randomInteger(1, 3);
   return difficultProject;
 }
-
