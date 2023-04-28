@@ -7,21 +7,10 @@ import { MobDev, WebDev, TestDev } from './developer.js';
 export class teamLead {
 
   // Метод служит для проверки очереди накопившихся проектов
-  checkStack(stack) {
-    let typeProject;
-    switch (stack) {
-      case WAIT_STACK_WEB:
-        typeProject = 'WEB';
-        break;
-      case WAIT_STACK_MOBIL:
-        typeProject = 'MOBIL';
-        break;
-      case WAIT_STACK_TEST:
-        typeProject = 'TEST';
-        break;
-    }
-    if (stack.length > 0) {
-      for (let i = 0; i < stack.length; i++) {
+  checkStack(department) {
+    let typeProject = department.typeDepartment;
+    if (department.listWaitProject.length > 0) {
+      for (let i = 0; i < department.listWaitProject.length; i++) {
         hireDev(typeProject);
       }
     } 
@@ -29,12 +18,17 @@ export class teamLead {
 
   // Метод найма программиста
   hireDev(typeProject) {
-    
-  }
-
-  // Метод увольнения программиста
-  removeDev(typeProject) {
-
+    let dev;
+    if (typeProject = 'WEB') {
+      dev = new WebDev();
+    }
+    if (typeProject = 'MOBIL') {
+      dev = new MobDev();
+    }
+    if (typeProject = 'TEST') {
+      dev = new TestDev();
+    }
+    return dev;
   }
 
   // генерация новых проектов
@@ -52,6 +46,11 @@ export class teamLead {
         mobilDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
       }
     }
+  }
+
+    // Метод увольнения программиста
+  removeDev(typeProject) {
+
   }
 }
 
