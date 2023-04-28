@@ -1,12 +1,9 @@
-import {WAIT_STACK_WEB, WAIT_STACK_MOBIL, WAIT_STACK_TEST} from '../const.js';
 import {WebProject, MobilProject} from './project.js';
 import {chooseTypeProject, chooseQuantityProjects, chooseDifficultProject} from '../func.js';
 import {webDepartment, mobilDepartment, testDepartment} from './department.js';
 import { MobDev, WebDev, TestDev } from './developer.js';
 
-/*
-  директор нанимает необходимое количество программистов для реализации вчерашних проектов и передает их по отделам
-*/
+
 export class teamLead {
 
   // Метод служит для проверки очереди накопившихся проектов
