@@ -4,6 +4,9 @@ import {chooseTypeProject, chooseQuantityProjects, chooseDifficultProject} from 
 import {webDepartment, mobilDepartment, testDepartment} from './department.js';
 import { MobDev, WebDev, TestDev } from './developer.js';
 
+/*
+  директор нанимает необходимое количество программистов для реализации вчерашних проектов и передает их по отделам
+*/
 export class teamLead {
 
   // Метод служит для проверки очереди накопившихся проектов
@@ -46,10 +49,10 @@ export class teamLead {
       let difficultProject = chooseDifficultProject(); // возвращает сложность для каждого проекта от 1 до 3
       if (typeProject === 'WEB') { // если тип проекта веб
         let project = new WebProject(difficultProject); // создаем новый веб проект с определенной выше сложностью
-        webDepartment.stackWait.push(project); // и добавляем его в массив веб проектов созданных этим днем
+        webDepartment.listWaitProject.push(project); // и добавляем его в массив веб проектов созданных этим днем
       } else { // иначе тип проекта мобильный
         let project = new MobilProject(difficultProject); // создаем новый мобильный проект с определенной выше сложностью
-        mobilDepartment.stackWait.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        mobilDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
       }
     }
   }

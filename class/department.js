@@ -1,11 +1,11 @@
 class Department {
-  stackWait
-  stackWorking
-  listWaitingDev
+  listWaitProject // очередь ожидающих проектов
+  listWorkingProject // список проектов в работе
+  listWaitingDev // список простаивающих программистов
 
   constructor() {
-    this.stackWait = [];
-    this.stackWorking = [];
+    this.listWaitProject = [];
+    this.listWorkingProject = [];
     this.listWaitingDev = [];
   }
 }
@@ -34,3 +34,4 @@ class TestDepartment extends Department {
 export let webDepartment = new WebDepartment();
 export let mobilDepartment = new MobilDepartment();
 export let testDepartment= new TestDepartment();
+

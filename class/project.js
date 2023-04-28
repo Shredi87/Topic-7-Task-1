@@ -1,4 +1,5 @@
 class Project {
+  difficultProject
   constructor (difficultProject) {
     this.difficultProject = difficultProject;
   }
