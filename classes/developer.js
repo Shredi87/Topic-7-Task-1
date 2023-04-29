@@ -5,12 +5,12 @@ class Dev {
     this.#countProject = 0;
   }
 
-  get countProject() {
+  getCountProject() {
     return this.#countProject;
   }
 
-  set countProject(countProject) {
-    this.#countProject = countProject++;
+  setCountProject() {
+    this.#countProject += 1;
   }
 }
 
