@@ -11,7 +11,7 @@ class TeamLead {
     let typeProject = department.typeDepartment;
     if (department.listWaitProject.length > 0) {
       for (let i = 0; i < department.listWaitProject.length; i++) {
-        department.listWaitingDev.unshift(hireDev(typeProject));
+        department.listWaitDev.unshift(hireDev(typeProject));
       }
     } 
   }
@@ -51,7 +51,7 @@ class TeamLead {
     // Метод увольнения программиста
   removeDev(department) {
     // Мне жалко увольнять прогеров, на их месте могу быть я =(
-    department.listWaitingDev.shift();
+    department.listWaitDev.shift();
   }
 }
 

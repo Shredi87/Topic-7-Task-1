@@ -4,7 +4,7 @@
 export function checkNeedRemoveDev(department) {
   let waitDays = department.getCountWaitDays(); // количество дней простоя берем из отдела
 
-  if (checkListWaitingDevDepartment(department)) { // если в списке простоя есть хоть кто-то
+  if (checklistWaitDevDepartment(department)) { // если в списке простоя есть хоть кто-то
     if (checkQuantityWaitngDays(waitDays)) { // проверяем равен ли простой программистов трем дням
       department.setCountWaitDays(waitDays); // передаем в счетчик простоя отдела тож значение "три"
       teamLead.removeDev(department); // увольняем программиста
@@ -20,8 +20,8 @@ export function checkNeedRemoveDev(department) {
   return; // выходим из функции
 }
 
-function checkListWaitingDevDepartment(department) {
-  return (department.listWaitingDev.length !== 0);
+function checklistWaitDevDepartment(department) {
+  return (department.listWaitDev.length !== 0);
 }
 
 function checkQuantityWaitngDays(waitDays) {
