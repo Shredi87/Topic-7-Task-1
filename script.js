@@ -1,6 +1,6 @@
 import { teamLead } from "./classes/teamLead.js";
 import { webDepartment, mobilDepartment, testDepartment } from './classes/department.js';
-import { funcCheckNeedRemoveDev } from "./funcCheckNeedRemoveDev.js";
+import { checkNeedRemoveDev } from "./funcCheckNeedRemoveDev.js";
 
 function workingOffice(days) {
   let countWebProject;
@@ -22,9 +22,9 @@ function workingOffice(days) {
 
 
 
-    funcCheckNeedRemoveDev(webDepartment);
-    funcCheckNeedRemoveDev(mobilDepartment);
-    funcCheckNeedRemoveDev(testDepartment);
+    checkNeedRemoveDev(webDepartment);
+    checkNeedRemoveDev(mobilDepartment);
+    checkNeedRemoveDev(testDepartment);
   }
 
   return console.log(`За ${days} дней было сформировано: 
