@@ -39,9 +39,3 @@ export let sortFunc = function () {
     return 0;
 }
 
-let obj = {
-  'listWaitingDev': [1, 2, 3],
-}
-console.log(obj);
-removeDev(obj);
-console.log(obj);
