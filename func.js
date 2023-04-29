@@ -27,7 +27,7 @@ export function chooseDifficultProject() {
   return difficultProject;
 }
 
-// Функция сортировки объектов массива listWaitingDev по количеству выполненных проектов (countProject) в порядке возрастания
+// Функция сортировки объектов массива listWaitDev по количеству выполненных проектов (countProject) в порядке возрастания
 export let sortFunc = function () {
     if (a.getCountProject() > b.getCountProject()) {
       return 1;
