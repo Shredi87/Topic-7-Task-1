@@ -7,7 +7,7 @@ class Department {
 
   constructor() {
     this.listWaitProject = [];
-    this.listWorkingProject = [];
+    this.listWorkingProject = new Map();
     this.listWaitingDev = [];
     this.#countWaitDays = 0;
   }
@@ -28,6 +28,10 @@ class Department {
 
   get typeDepartment() {
     return this.typeDepartment;
+  }
+
+  sortListWaitingDev() {
+    this.listWaitingDev = this.listWaitingDev.sort(sotrFunc);
   }
 }
 
