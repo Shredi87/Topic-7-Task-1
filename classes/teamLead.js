@@ -1,5 +1,5 @@
 import { WebProject, MobilProject } from './project.js';
-import { chooseTypeProject, chooseQuantityProjects, chooseDifficultProject } from '../func.js';
+import { chooseTypeProject, chooseQuantityProjects, chooseDifficultProject, sortFunc } from '../func.js';
 import { webDepartment, mobilDepartment, testDepartment } from './department.js';
 import { MobDev, WebDev, TestDev } from './developer.js';
 
@@ -11,7 +11,7 @@ class TeamLead {
     let typeProject = department.typeDepartment;
     if (department.listWaitProject.length > 0) {
       for (let i = 0; i < department.listWaitProject.length; i++) {
-        hireDev(typeProject);
+        department.listWaitingDev.unshift(hireDev(typeProject));
       }
     } 
   }
@@ -49,8 +49,9 @@ class TeamLead {
   }
 
     // Метод увольнения программиста
-  removeDev(typeProject) {
+  removeDev(department) {
     // Мне жалко увольнять прогеров, на их месте могу быть я =(
+    department.listWaitingDev.shift();
   }
 }
 
