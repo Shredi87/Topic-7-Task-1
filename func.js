@@ -26,3 +26,22 @@ export function chooseDifficultProject() {
   let difficultProject = randomInteger(1, 3);
   return difficultProject;
 }
+
+// Функция сортировки объектов массива listWaitingDev по количеству выполненных проектов (countProject) в порядке возрастания
+export let sortFunc = function () {
+    if (a.getCountProject() > b.getCountProject()) {
+      return 1;
+    }
+    if (a.getCountProject() < b.getCountProject()) {
+      return -1;
+    }
+    // a должно быть равным b
+    return 0;
+}
+
+let obj = {
+  'listWaitingDev': [1, 2, 3],
+}
+console.log(obj);
+removeDev(obj);
+console.log(obj);
