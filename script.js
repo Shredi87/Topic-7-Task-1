@@ -3,15 +3,6 @@ import { webDepartment, mobilDepartment, testDepartment } from './classes/depart
 import { checkNeedRemoveDev } from "./funcCheckNeedRemoveDev.js";
 
 function workingOffice(days) {
-  let countWebProject;
-  let countMobilProject;
-  let countTestProject;
-  let countHireMobDev;
-  let countRemoveMobDev;
-  let countHireWebDev;
-  let countRemoveWebDev;
-  let countHireTestDev;
-  let countRemoveTestDev;
 
   for (let i = 1; i <= days; i++) {
     console.log(`workingOffice day ${i}`);
