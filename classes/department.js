@@ -62,6 +62,8 @@ class WebDepartment extends Department {
         developer.setCountProject();
         this.setCountFinishedProject()  
       }
+
+      this.setCountWaitDays();
     }
   }
 }
