@@ -70,7 +70,15 @@ class TestDepartment extends Department {
     super();
     this.#typeDepartment = 'TEST';
   }
-    
+  
+  checkWorkSpace() {
+    for (let project of department.workSpace.keys()) {
+      department.workSpace.get(project).setCountProject();
+      department.listWaitDev.unshift(department.workSpace.get(project));
+      department.setCountFinishedProject()
+      department.workSpace.delete(project);  
+    }
+  }
 
 }
 
