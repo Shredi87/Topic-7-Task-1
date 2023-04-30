@@ -5,14 +5,17 @@ class Department {
   #countWaitDays // счетчик дней простоя программистов
   typeDepartment // тип отдела
   #countFinishedProject // количество законченных проектов
+  #countHireDev // количество нанятых разработчиков
+  #countRemoveDev // коичество уволенных разработчиков
 
   constructor() {
     this.listWaitProject = [];
     this.workSpace = new Map();
     this.listWaitDev = [];
     this.#countWaitDays = 0;
-    this.#countFinishedProject =0;
-
+    this.#countFinishedProject = 0;
+    this.#countHireDev = 0;
+    this.#countRemoveDev = 0;
   }
 
   getCountWaitDays() {
@@ -43,6 +46,22 @@ class Department {
 
   setCountFinishedProject() {
     this.#countFinishedProject += 1;
+  }
+
+  getCountHireDev() {
+    return this.#countHireDev;
+  }
+
+  setCountHireDev() {
+    this.#countHireDev += 1;
+  }
+
+  getCountRemoveDev() {
+    return this.#countRemoveDev;
+  }
+
+  setCountRemoveDev() {
+    this.#countRemoveDev += 1;
   }
 }
 
