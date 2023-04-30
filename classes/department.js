@@ -1,13 +1,13 @@
 class Department {
   listWaitProject // очередь ожидающих проектов
-  listWorkingProject // список проектов в работе
+  workSpace // список проектов в работе
   listWaitDev // список простаивающих программистов
   #countWaitDays // счетчик дней простоя программистов
   typeDepartment // тип отдела
 
   constructor() {
     this.listWaitProject = [];
-    this.listWorkingProject = new Map();
+    this.workSpace = new Map();
     this.listWaitDev = [];
     this.#countWaitDays = 0;
   }

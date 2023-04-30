@@ -4,6 +4,7 @@ class Dev {
   
   constructor() {
     this.#countProject = 0;
+    this.#workDays = 0;
   }
 
   getCountProject() {
