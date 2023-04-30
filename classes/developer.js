@@ -1,5 +1,6 @@
 class Dev {
   #countProject
+  #workDays
   
   constructor() {
     this.#countProject = 0;
@@ -11,6 +12,14 @@ class Dev {
 
   setCountProject() {
     this.#countProject += 1;
+  }
+
+  getWorkDay() {
+    return this.#workDays;
+  }
+
+  setWorkDay() {
+    this.#workDays += 1;
   }
 }
 
