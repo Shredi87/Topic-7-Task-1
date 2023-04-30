@@ -74,7 +74,20 @@ class MobilDepartment extends Department {
     super();
     this.#typeDepartment = 'MOBIL';
   }
-    
+  
+  checkWorkSpace() {
+    for (let [project, developer] of this.workSpace) {
+      if (project.difficultProject === developer.getWorkDay()) {
+        testDepartment.listWaitDev.push(project);
+        this.listWaitDev.push(developer);
+        this.workSpace.delete(project);
+        developer.setCountProject();
+        this.setCountFinishedProject()  
+      }
+
+      this.setCountWaitDays();
+    }
+  }
 }
 
 class TestDepartment extends Department {
