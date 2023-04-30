@@ -36,6 +36,14 @@ class Department {
     return this.typeDepartment;
   }
 
+  fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
+    let length = (this.listWaitProject.length >= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
+    for (let i = 0; i < length; i++) {
+      this.listWaitDev[i].setWorkDay();
+      this.workSpace.set(this.listWaitProject[i], this.listWaitDev[i]);
+    }
+  }
+
   sortListWaitDev() {
     this.listWaitDev = this.listWaitDev.sort(sotrFunc);
   }
@@ -128,6 +136,7 @@ class TestDepartment extends Department {
 
 }
 
-export let webDepartment = new WebDepartment();
-export let mobilDepartment = new MobilDepartment();
-export let testDepartment= new TestDepartment();
+let webDepartment = new WebDepartment();
+let mobilDepartment = new MobilDepartment();
+let testDepartment= new TestDepartment();
+export let office = [webDepartment, mobilDepartment, testDepartment];
