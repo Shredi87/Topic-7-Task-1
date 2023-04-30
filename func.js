@@ -5,7 +5,6 @@ import { checkNeedRemoveDev } from "./funcCheckNeedRemoveDev.js";
 export function workingOffice(days) {
 
   for (let i = 1; i <= days; i++) {
-    console.log(`workingOffice day ${i}`);
     // Начало рабочего дня
     // Проверяем наличие законченных проектов и переводим освободившихся программистов в список простоя
     office.forEach(department => department.checkWorkSpace());

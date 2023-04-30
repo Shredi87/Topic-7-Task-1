@@ -1,3 +1,3 @@
 import { workingOffice } from "./func.js";
 
-workingOffice(days);
+workingOffice(15);
