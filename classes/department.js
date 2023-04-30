@@ -52,7 +52,18 @@ class WebDepartment extends Department {
     super();
     this.#typeDepartment = 'WEB';
   }
-    
+  
+  checkWorkSpace() {
+    for (let [project, developer] of this.workSpace) {
+      if (project.difficultProject === developer.getWorkDay()) {
+        testDepartment.listWaitDev.push(project);
+        this.listWaitDev.push(developer);
+        this.workSpace.delete(project);
+        developer.setCountProject();
+        this.setCountFinishedProject()  
+      }
+    }
+  }
 }
 
 class MobilDepartment extends Department {
@@ -72,11 +83,12 @@ class TestDepartment extends Department {
   }
   
   checkWorkSpace() {
-    for (let project of department.workSpace.keys()) {
-      department.workSpace.get(project).setCountProject();
-      department.listWaitDev.unshift(department.workSpace.get(project));
-      department.setCountFinishedProject()
-      department.workSpace.delete(project);  
+    for (let project of this.workSpace.keys()) {
+      let developer = this.workSpace.get(project);
+      developer.setCountProject();
+      this.listWaitDev.push(developer);
+      this.setCountFinishedProject()
+      this.workSpace.delete(project);  
     }
   }
 
