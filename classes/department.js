@@ -101,6 +101,39 @@ class MobilDepartment extends Department {
     super();
     this.#typeDepartment = 'MOBIL';
   }
+
+  fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
+    let length = (this.listWaitProject.length >= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
+    
+    for (let i = 0; i < length; i++) {
+      this.listWaitDev[i].setWorkDay();
+      this.workSpace.set(this.listWaitProject[i], [this.listWaitDev[i]]);
+    }
+  
+    if (this.listWaitDev.length > 0) {
+      for (let i = 0; i < this.listWaitDev.length; i++) {
+        for (let [project, developer] of this.workSpace.keys()) {
+          let addDev = () => {
+            this.workSpace.set(project, developer.push(this.listWaitDev.shift()));
+          };
+          switch (project.difficultProject - 1) {
+            case 0:
+              break;
+            case 1:
+              addDev();
+              break;
+            case 2:
+              if (this.listWaitDev.length = 2) {
+                addDev();
+              } 
+              addDev();
+              break;
+          } 
+          
+        }
+      }
+    }
+  }
   
   checkWorkSpace() {
     for (let [project, developer] of this.workSpace) {
