@@ -1,5 +1,5 @@
 import { WebProject, MobilProject } from './project.js';
-import { chooseTypeProject, chooseQuantityProjects, chooseDifficultProject, sortFunc } from '../func.js';
+import { chooseTypeProject, chooseQuantityProjects, chooseDifficultProject } from '../func.js';
 import { webDepartment, mobilDepartment } from './department.js';
 import { MobDev, WebDev, TestDev } from './developer.js';
 

@@ -1,3 +1,5 @@
+import { sortFunc } from "../func";
+
 class Department {
   listWaitProject // очередь ожидающих проектов
   workSpace // список проектов в работе
@@ -45,7 +47,7 @@ class Department {
   }
 
   sortListWaitDev() {
-    this.listWaitDev = this.listWaitDev.sort(sotrFunc);
+    this.listWaitDev = this.listWaitDev.sort(sortFunc);
   }
 
   getCountFinishedProject() {
