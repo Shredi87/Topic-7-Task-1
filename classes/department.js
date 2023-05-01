@@ -1,5 +1,3 @@
-import { sortFunc } from "../func";
-
 class Department {
   listWaitProject // очередь ожидающих проектов
   workSpace // список проектов в работе
@@ -175,3 +173,58 @@ let webDepartment = new WebDepartment();
 let mobilDepartment = new MobilDepartment();
 let testDepartment= new TestDepartment();
 export let office = [webDepartment, mobilDepartment, testDepartment];
+
+function sortFunc() {
+  if (a.getCountProject() > b.getCountProject()) {
+    return 1;
+  }
+  if (a.getCountProject() < b.getCountProject()) {
+    return -1;
+  }
+  // a должно быть равным b
+  return 0;
+}
+
+class Dev {
+  #countProject
+  #workDays
+  
+  constructor() {
+    this.#countProject = 0;
+    this.#workDays = 0;
+  }
+
+  getCountProject() {
+    return this.#countProject;
+  }
+
+  setCountProject() {
+    this.#countProject += 1;
+  }
+
+  getWorkDay() {
+    return this.#workDays;
+  }
+
+  setWorkDay() {
+    this.#workDays += 1;
+  }
+}
+
+export class MobDev extends Dev {
+  constructor() {
+    super();
+  }
+}
+
+export class WebDev extends Dev {
+  constructor() {
+    super();
+  }
+}
+
+export class TestDev extends Dev {
+  constructor() {
+    super();
+  }
+}

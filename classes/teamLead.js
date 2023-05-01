@@ -1,6 +1,6 @@
 import { WebProject, MobilProject } from './project.js';
 import { chooseTypeProject, chooseQuantityProjects, chooseDifficultProject } from '../func.js';
-import { webDepartment, mobilDepartment } from './department.js';
+import { office } from './department.js';
 import { MobDev, WebDev, TestDev } from './developer.js';
 
 
@@ -41,10 +41,10 @@ class TeamLead {
       let difficultProject = chooseDifficultProject(); // возвращает сложность для каждого проекта от 1 до 3
       if (typeProject === 'WEB') { // если тип проекта веб
         let project = new WebProject(difficultProject); // создаем новый веб проект с определенной выше сложностью
-        webDepartment.listWaitProject.push(project); // и добавляем его в массив веб проектов созданных этим днем
+        office[0].listWaitProject.push(project); // и добавляем его в массив веб проектов созданных этим днем
       } else { // иначе тип проекта мобильный
         let project = new MobilProject(difficultProject); // создаем новый мобильный проект с определенной выше сложностью
-        mobilDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        office[1].listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
       }
     }
   }

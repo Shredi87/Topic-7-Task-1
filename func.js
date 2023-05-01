@@ -1,6 +1,5 @@
 import { teamLead } from "./classes/teamLead.js";
 import { office } from './classes/department.js';
-import { checkNeedRemoveDev } from "./funcCheckNeedRemoveDev.js";
 
 export function workingOffice(days) {
 
@@ -13,7 +12,7 @@ export function workingOffice(days) {
     office.forEach(department => department.fillWorkSpace());
 
     // Проверяем наличие проектов в списке ожидания и нанимаем на них программистов
-    office.forEach(teamLead.checkStack());
+    office.forEach(department => teamLead.checkStack(department));
     // teamLead.checkStack(webDepartment);
     // teamLead.checkStack(mobilDepartment);
     // teamLead.checkStack(testDepartment);
@@ -72,16 +71,7 @@ export function chooseDifficultProject() {
 }
 
 // Функция сортировки объектов массива listWaitDev по количеству выполненных проектов (countProject) в порядке возрастания
-export let sortFunc = function () {
-    if (a.getCountProject() > b.getCountProject()) {
-      return 1;
-    }
-    if (a.getCountProject() < b.getCountProject()) {
-      return -1;
-    }
-    // a должно быть равным b
-    return 0;
-}
+export 
 
 // каскад функций, проверяющий равен ли счетчик дней простоя программистов в отделе (department.countWaitDays) трем.
 // при верном условии запускает метод увольнения программиста
