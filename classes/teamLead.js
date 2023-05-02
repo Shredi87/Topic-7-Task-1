@@ -1,8 +1,6 @@
 import { WebProject, MobilProject } from './project.js';
-import { chooseTypeProject, chooseQuantityProjects, chooseDifficultProject } from '../func.js';
-import { office } from './department.js';
 import { MobDev, WebDev, TestDev } from './developer.js';
-
+import { webDepartment, mobilDepartment } from "../func.js";
 
 class TeamLead {
 
@@ -41,10 +39,12 @@ class TeamLead {
       let difficultProject = chooseDifficultProject(); // возвращает сложность для каждого проекта от 1 до 3
       if (typeProject === 'WEB') { // если тип проекта веб
         let project = new WebProject(difficultProject); // создаем новый веб проект с определенной выше сложностью
-        office[0].listWaitProject.push(project); // и добавляем его в массив веб проектов созданных этим днем
-      } else { // иначе тип проекта мобильный
+        webDepartment.listWaitProject.push(project); // и добавляем его в массив веб проектов созданных этим днем
+      } 
+      if (typeProject === 'MOBIL') { // если тип проекта мобильный
         let project = new MobilProject(difficultProject); // создаем новый мобильный проект с определенной выше сложностью
-        office[1].listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        console.log('mob ' + project);
+        mobilDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
       }
     }
   }
@@ -59,3 +59,32 @@ class TeamLead {
 
 
 export let teamLead = new TeamLead();
+
+// Функция-рандомайзер используется в соответствующих проектах для определения:
+// 1. типов проектов (веб|мобильные) в функции chooseTypeProject
+// 2. количества проектов (от 0 до 4) в функции chooseQuantityProjects
+// 3. сложности проектов (от 1 до 3) для каждого проекта выбираются отдельно chooseDifficultProject
+function randomInteger(min, max) {
+  let rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+}
+
+// 1. Выбор типа проектов
+// Тип проектов поступивших в один день может быть только веб или только мобильные
+// где 0 - веб-проекты, а 1 - мобильные проекты.
+function chooseTypeProject() {
+  let typeProject = randomInteger(0, 1);
+  return (typeProject === 1) ? 'MOBIL' : 'WEB';
+}
+
+// 2. Определение количества проектов
+function chooseQuantityProjects() {
+  let quantityProjects = randomInteger(0, 4);
+  return quantityProjects;
+}
+
+// 3. Определение сложности каждого проекта
+function chooseDifficultProject() {
+  let difficultProject = randomInteger(1, 3);
+  return difficultProject;
+}
