@@ -11,7 +11,7 @@ class TeamLead {
     let typeProject = department.typeDepartment;
     if (department.listWaitProject.length > 0) {
       for (let i = 0; i < department.listWaitProject.length; i++) {
-        department.listWaitDev.push(hireDev(typeProject));
+        department.listWaitDev.push(this.hireDev(typeProject));
         department.setCountHireDev();
       }
     } 
