@@ -1,9 +1,11 @@
+import { testDepartment } from "../func.js"
+
 class Department {
   listWaitProject // очередь ожидающих проектов
   workSpace // список проектов в работе
   listWaitDev // список простаивающих программистов
-  #countWaitDays // счетчик дней простоя программистов
   typeDepartment // тип отдела
+  #countWaitDays // счетчик дней простоя программистов
   #countFinishedProject // количество законченных проектов
   #countHireDev // количество нанятых разработчиков
   #countRemoveDev // коичество уволенных разработчиков
@@ -18,7 +20,7 @@ class Department {
     this.#countRemoveDev = 0;
   }
 
-  getCountWaitDays() {
+  get countWaitDays() {
     return this.#countWaitDays;
   }
 
@@ -35,8 +37,6 @@ class Department {
   get typeDepartment() {
     return this.typeDepartment;
   }
-
-
 
   sortListWaitDev() {
     this.listWaitDev = this.listWaitDev.sort(sortFunc);
@@ -67,11 +67,11 @@ class Department {
   }
 }
 
-class WebDepartment extends Department {
-  #typeDepartment
+export class WebDepartment extends Department {
+
   constructor() {
     super();
-    this.#typeDepartment = 'WEB';
+    this.typeDepartment = 'WEB';
   }
   
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
@@ -89,7 +89,7 @@ class WebDepartment extends Department {
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
         developer.setCountProject();
-        this.setCountFinishedProject()  
+        this.setCountFinishedProject(); 
       }
 
       this.setCountWaitDays();
@@ -97,11 +97,11 @@ class WebDepartment extends Department {
   }
 }
 
-class MobilDepartment extends Department {
-  #typeDepartment
+export class MobilDepartment extends Department {
+
   constructor() {
     super();
-    this.#typeDepartment = 'MOBIL';
+    this.typeDepartment = 'MOBIL';
   }
 
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
@@ -116,7 +116,7 @@ class MobilDepartment extends Department {
       for (let i = 0; i < this.listWaitDev.length; i++) {
         for (let [project, developer] of this.workSpace) {
           let addDev = () => {
-            let moveDev = this.listWaitDev.shift();
+            let moveDev = this.listWaitDev.shift(); 
             this.workSpace.set(project, developer.push(moveDev));
           };
           switch (project.difficultProject - 1) {
@@ -153,11 +153,11 @@ class MobilDepartment extends Department {
   }
 }
 
-class TestDepartment extends Department {
-  #typeDepartment
+export class TestDepartment extends Department {
+
   constructor() {
     super();
-    this.#typeDepartment = 'TEST';
+    this.typeDepartment = 'TEST';
   }
   
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
@@ -173,60 +173,11 @@ class TestDepartment extends Department {
       let developer = this.workSpace.get(project);
       developer.setCountProject();
       this.listWaitDev.push(developer);
-      this.setCountFinishedProject()
+      this.setCountFinishedProject();
       this.workSpace.delete(project);  
     }
   }
 
 }
 
-let webDepartment = new WebDepartment();
-let mobilDepartment = new MobilDepartment();
-let testDepartment= new TestDepartment();
-export let office = [webDepartment, mobilDepartment, testDepartment];
-
 let sortFunc = (a, b) => {a.countProject - b.countProject}
-
-class Dev {
-  #countProject
-  #workDays
-  
-  constructor() {
-    this.#countProject = 0;
-    this.#workDays = 0;
-  }
-
-  getCountProject() {
-    return this.#countProject;
-  }
-
-  setCountProject() {
-    this.#countProject += 1;
-  }
-
-  getWorkDay() {
-    return this.#workDays;
-  }
-
-  setWorkDay() {
-    this.#workDays += 1;
-  }
-}
-
-export class MobDev extends Dev {
-  constructor() {
-    super();
-  }
-}
-
-export class WebDev extends Dev {
-  constructor() {
-    super();
-  }
-}
-
-export class TestDev extends Dev {
-  constructor() {
-    super();
-  }
-}
