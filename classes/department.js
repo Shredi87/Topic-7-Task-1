@@ -36,13 +36,7 @@ class Department {
     return this.typeDepartment;
   }
 
-  fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
-    let length = (this.listWaitProject.length >= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
-    for (let i = 0; i < length; i++) {
-      this.listWaitDev[i].setWorkDay();
-      this.workSpace.set(this.listWaitProject[i], this.listWaitDev[i]);
-    }
-  }
+
 
   sortListWaitDev() {
     this.listWaitDev = this.listWaitDev.sort(sortFunc);
@@ -80,9 +74,17 @@ class WebDepartment extends Department {
     this.#typeDepartment = 'WEB';
   }
   
+  fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
+    let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
+    for (let i = 0; i < length; i++) {
+      this.listWaitDev[i].setWorkDay();
+      this.workSpace.set(this.listWaitProject[i], this.listWaitDev[i]);
+    }
+  }
+
   checkWorkSpace() {
     for (let [project, developer] of this.workSpace) {
-      if (project.difficultProject === developer.getWorkDay()) {
+      if (project.difficultProject === developer.workDay) {
         testDepartment.listWaitDev.push(project);
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
@@ -103,7 +105,7 @@ class MobilDepartment extends Department {
   }
 
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
-    let length = (this.listWaitProject.length >= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
+    let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
     
     for (let i = 0; i < length; i++) {
       this.listWaitDev[i].setWorkDay();
@@ -112,9 +114,10 @@ class MobilDepartment extends Department {
   
     if (this.listWaitDev.length > 0) {
       for (let i = 0; i < this.listWaitDev.length; i++) {
-        for (let [project, developer] of this.workSpace.keys()) {
+        for (let [project, developer] of this.workSpace) {
           let addDev = () => {
-            this.workSpace.set(project, developer.push(this.listWaitDev.shift()));
+            let moveDev = this.listWaitDev.shift();
+            this.workSpace.set(project, developer.push(moveDev));
           };
           switch (project.difficultProject - 1) {
             case 0:
@@ -137,7 +140,7 @@ class MobilDepartment extends Department {
   
   checkWorkSpace() {
     for (let [project, developer] of this.workSpace) {
-      if (project.difficultProject === developer.getWorkDay()) {
+      if (project.difficultProject === developer.workDay) {
         testDepartment.listWaitDev.push(project);
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
@@ -157,6 +160,14 @@ class TestDepartment extends Department {
     this.#typeDepartment = 'TEST';
   }
   
+  fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
+    let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
+    for (let i = 0; i < length; i++) {
+      this.listWaitDev[i].setWorkDay();
+      this.workSpace.set(this.listWaitProject[i], this.listWaitDev[i]);
+    }
+  }
+
   checkWorkSpace() {
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
@@ -174,16 +185,7 @@ let mobilDepartment = new MobilDepartment();
 let testDepartment= new TestDepartment();
 export let office = [webDepartment, mobilDepartment, testDepartment];
 
-function sortFunc() {
-  if (a.getCountProject() > b.getCountProject()) {
-    return 1;
-  }
-  if (a.getCountProject() < b.getCountProject()) {
-    return -1;
-  }
-  // a должно быть равным b
-  return 0;
-}
+let sortFunc = (a, b) => {a.countProject - b.countProject}
 
 class Dev {
   #countProject
