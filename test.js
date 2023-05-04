@@ -3,34 +3,34 @@ class Department {
   workSpace // список проектов в работе
   listWaitDev // список простаивающих программистов
   typeDepartment // тип отдела
-  #countWaitDays // счетчик дней простоя программистов
-  #countFinishedProject // количество законченных проектов
-  #countHireDev // количество нанятых разработчиков
-  #countRemoveDev // коичество уволенных разработчиков
+  countWaitDays // счетчик дней простоя программистов
+  countFinishedProject // количество законченных проектов
+  countHireDev // количество нанятых разработчиков
+  countRemoveDev // коичество уволенных разработчиков
   countComingProject // список входящих проектов
 
   constructor() {
     this.listWaitProject = [];
     this.workSpace = new Map();
     this.listWaitDev = [];
-    this.#countWaitDays = 0;
-    this.#countFinishedProject = 0;
-    this.#countHireDev = 0;
-    this.#countRemoveDev = 0;
+    this.countWaitDays = 0;
+    this.countFinishedProject = 0;
+    this.countHireDev = 0;
+    this.countRemoveDev = 0;
     this.countComingProject = 0;
   }
 
   get countWaitDays() {
-    return this.#countWaitDays;
+    return this.countWaitDays;
   }
 
   setCountWaitDays(waitDays) {
     if (waitDays === 0) {
-      this.#countWaitDays = 0;
+      this.countWaitDays = 0;
     } else if (waitDays === 3) {
-      this.#countWaitDays = 3;
+      this.countWaitDays = 3;
     } else {
-      this.#countWaitDays += 1;
+      this.countWaitDays += 1;
     }
   }
 
@@ -43,11 +43,11 @@ class Department {
   }
 
   getCountFinishedProject() {
-    return this.#countFinishedProject;
+    return this.countFinishedProject;
   }
 
   setCountFinishedProject() {
-    this.#countFinishedProject += 1;
+    this.countFinishedProject += 1;
   }
 
   getCountComingProject() {
@@ -59,19 +59,19 @@ class Department {
   }
 
   getCountHireDev() {
-    return this.#countHireDev;
+    return this.countHireDev;
   }
 
   setCountHireDev() {
-    this.#countHireDev += 1;
+    this.countHireDev += 1;
   }
 
   getCountRemoveDev() {
-    return this.#countRemoveDev;
+    return this.countRemoveDev;
   }
 
   setCountRemoveDev() {
-    this.#countRemoveDev += 1;
+    this.countRemoveDev += 1;
   }
 }
 
@@ -98,6 +98,7 @@ class WebDepartment extends Department {
     console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
+      developer.setWorkDay;
       if (!project) project = 'empty';
       console.log(project);
       if (!developer) developer = 'empty';
@@ -171,6 +172,7 @@ class MobilDepartment extends Department {
     if (this.workSpace.size === 0) console.log('Мапа пуста - никто не работает');
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
+      developer.setWorkDay;
       if (!project) project = 'empty';
       console.log(project);
       if (!developer) developer = 'empty';
@@ -216,6 +218,7 @@ class TestDepartment extends Department {
     if (this.workSpace.size === 0) console.log('Мапа пуста - никто не работает');
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
+      developer.setWorkDay();
       if (!project) project = 'empty';
       console.log(project);
       if (!developer) developer = 'empty';
@@ -233,13 +236,13 @@ class TestDepartment extends Department {
 let sortFunc = (a, b) => {a.countProject - b.countProject}
 
 class Project {
-  #difficultProject
+  difficultProject
   constructor (difficultProject) {
-    this.#difficultProject = difficultProject;
+    this.difficultProject = difficultProject;
   }
 
   get difficultProject() {
-    return this.#difficultProject;
+    return this.difficultProject;
   }
 }
 
@@ -261,28 +264,28 @@ class MobilProject extends Project {
 }
 
 class Dev {
-  #countProject
-  #workDays
+  countProject
+  workDays
   
   constructor() {
-    this.#countProject = 0;
-    this.#workDays = 0;
+    this.countProject = 0;
+    this.workDays = 0;
   }
 
   get countProject() {
-    return this.#countProject;
+    return this.countProject;
   }
 
   setCountProject() {
-    this.#countProject += 1;
+    this.countProject += 1;
   }
 
   get workDay() {
-    return this.#workDays;
+    return this.workDays;
   }
 
   setWorkDay() {
-    this.#workDays += 1;
+    this.workDays += 1;
   }
 }
 
