@@ -18,15 +18,18 @@ class TeamLead {
   // Метод найма программиста
   hireDev(typeProject) {
     let dev;
-    if (typeProject = 'WEB') {
-      dev = new WebDev();
+    switch (typeProject) {
+      case 'WEB':
+        dev = new WebDev();
+        break;
+      case 'MOBIL':
+        dev = new MobDev();
+        break;
+      case 'TEST':
+        dev = new TestDev();
+        break;
     }
-    if (typeProject = 'MOBIL') {
-      dev = new MobDev();
-    }
-    if (typeProject = 'TEST') {
-      dev = new TestDev();
-    }
+  
     return dev;
   }
 
