@@ -88,34 +88,37 @@ class WebDepartment extends Department {
       let project = this.listWaitProject.shift();
       let developer = this.listWaitDev.shift();
       developer.setWorkDay();
-      this.workSpace.set(project, [developer]);
+      this.workSpace.set(project, developer);
     }
   
   }
 
   checkWorkSpace() {
     console.log('this web department');
+    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
-      developer.setWorkDay();
-      if (!project) project = 'empty';
       console.log(project);
-      if (!developer) developer = 'empty';
       console.log(developer);
       if (project.difficultProject === developer.workDay) {
-        console.log('BINGOOOOO');
-        console.log('difficultProject = ' + project.difficultProject);
-        console.log('workDay = ' + developer.workDay);
-        testDepartment.listWaitDev.push(project);
-        if (!testDepartment.listWaitDev) testDepartment.listWaitDev = 'empty';
-        console.log(testDepartment.listWaitDev);
+        console.log('BINGOOOOO');        
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
         developer.setCountProject();
         this.setCountFinishedProject(); 
+        this.countWaitDays = 0;
+        let difficultProject = 1;
+        project = new TestProject(difficultProject);
+        console.log(project);
+        testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        testDepartment.setCountComingProject();
+        console.log(testDepartment.getCountComingProject());
+        console.log(developer);
+      } else {
+        developer.setWorkDay();
+        this.setCountWaitDays();
+        console.log(developer);
       }
-
-      this.setCountWaitDays();
     }
   }
 }
@@ -134,61 +137,62 @@ class MobilDepartment extends Department {
       let project = this.listWaitProject.shift();
       let developer = this.listWaitDev.shift();
       developer.setWorkDay();
-      this.workSpace.set(project, [developer]);
+      let arrDeveloper = [developer];
+      this.workSpace.set(project, arrDeveloper);
     }
   
-    // if (this.listWaitDev.length > 0) {
-    //   for (let i = 0; i < this.listWaitDev.length; i++) {
-    //     for (let project of this.workSpace.keys()) {
-    //       let developer = this.workSpace.get(project);
-    //       console.log(developer);
-    //       let addDev = () => {
-    //         let moveDeveloper = this.listWaitDev.shift(); 
-    //         this.workSpace.set(project, [...developer, moveDeveloper]);
-    //       };
-    //       switch (project.difficultProject - 1) {
-    //         case 0:
-    //           break;
-    //         case 1:
-    //           addDev();
-    //           break;
-    //         case 2:
-    //           if (this.listWaitDev.length = 2) {
-    //             addDev();
-    //           } 
-    //           addDev();
-    //           break;
-    //       } 
-          
-    //     }
-    //   }
-    // }
+    if (this.listWaitDev.length > 0) {
+      for (let i = 0; i < this.listWaitDev.length; i++) {
+        for (let project of this.workSpace.keys()) {
+          let additionalDeveloper = this.workSpace.get(project);
+          console.log(additionalDeveloper);
+          switch (project.difficultProject - 1) {
+            case 0:
+              break;
+            case 1:
+              arrDeveloper = arrDeveloper.concat(additionalDeveloper);
+              break;
+            case 2:
+              if (this.listWaitDev.length = 2) {
+                arrDeveloper = arrDeveloper.concat(additionalDeveloper);
+              } 
+              arrDeveloper = arrDeveloper.concat(additionalDeveloper);
+              break;
+          } 
+        }
+      }
+    }
   }
   
   checkWorkSpace() {
     console.log('this mob department');
-    if (this.workSpace.size === 0) console.log('Мапа пуста - никто не работает');
+    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
-      let developer = this.workSpace.get(project);
-      developer.setWorkDay();
-      if (!project) project = 'empty';
+      let arrDeveloper = this.workSpace.get(project);
+      let efficiency = 0;
       console.log(project);
-      if (!developer) developer = 'empty';
-      console.log(developer);
-      if (project.difficultProject === developer.workDay) {
-        console.log('BINGOOOOO');
-        console.log('difficultProject = ' + project.difficultProject);
-        console.log('workDay = ' + developer.workDay);
-        testDepartment.listWaitDev.push(project);
-        if (!testDepartment.listWaitDev) testDepartment.listWaitDev = 'empty';
-        console.log(testDepartment.listWaitDev);
-        this.listWaitDev.push(developer);
-        this.workSpace.delete(project);
-        developer.setCountProject();
-        this.setCountFinishedProject(); 
+      for (let i = 0; i < arrDeveloper.length; i++) {
+        let developer = arrDeveloper[i].setWorkDay();
+        console.log(developer);
+        efficiency++;
       }
-
-      this.setCountWaitDays();
+      if (project.difficultProject === efficiency) {
+        this.listWaitDev.push([...arrDeveloper]);
+        this.workSpace.delete(project);
+        arrDeveloper.forEach(element => element.setCountProject()); 
+        this.setCountFinishedProject(); 
+        this.countWaitDays = 0;
+        let difficultProject = 1;
+        project = new TestProject(difficultProject);
+        console.log(project);
+        testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        testDepartment.setCountComingProject();
+        console.log(testDepartment.getCountComingProject());
+      } else {
+        arrDeveloper[1].setCountProject();
+        arrDeveloper = arrDeveloper.splice(1);
+        this.setCountWaitDays();
+      }
     }
   }
 }
@@ -205,22 +209,18 @@ class TestDepartment extends Department {
     for (let i = 0; i < length; i++) {
       let project = this.listWaitProject.shift();
       let developer = this.listWaitDev.shift();
-      developer.setWorkDay();
-      this.workSpace.set(project, [developer]);
+      this.workSpace.set(project, developer);
     }
   }
 
   checkWorkSpace() {
     console.log('this test department');
-    if (this.workSpace.size === 0) console.log('Мапа пуста - никто не работает');
+    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
-      developer.setWorkDay();
-      if (!project) project = 'empty';
       console.log(project);
-      if (!developer) developer = 'empty';
-      console.log(developer);
       developer.setCountProject();
+      console.log(developer);
       console.log(developer.setCountProject());
       this.listWaitDev.push(developer);
       this.setCountFinishedProject();
@@ -257,6 +257,14 @@ class MobilProject extends Project {
   constructor(difficultProject) {
     super(difficultProject);
     this.typeProject = 'MOBIL';
+  }
+}
+
+class TestProject extends Project {
+  typeProject
+  constructor(difficultProject) {
+    super(difficultProject);
+    this.typeProject = 'TEST';
   }
 }
 
@@ -335,24 +343,6 @@ class TeamLead {
     return dev;
   }
 
-  // генерация новых проектов --- проверен/исправен
-  // getProjects() {
-  //   let typeProject = chooseTypeProject();  // возвращает 'MOBIL' или 'WEB'
-  //   let quantityProjects = chooseQuantityProjects(); // возвращает целое число от 0 до 4
-  //   // Прогоняем цикл на создание проектов в зависимости от количества проектов. Если количество проектов равно нуля - цикл не запускается.
-  //   for (let i = 0; i < quantityProjects; i++) {
-  //     let difficultProject = chooseDifficultProject(); // возвращает сложность для каждого проекта от 1 до 3
-  //     if (typeProject === 'WEB') { // если тип проекта веб
-  //       let project = new WebProject(difficultProject); // создаем новый веб проект с определенной выше сложностью
-  //       webDepartment.listWaitProject.push(project); // и добавляем его в массив веб проектов созданных этим днем
-  //     } 
-  //     if (typeProject === 'MOBIL') { // если тип проекта мобильный
-  //       let project = new MobilProject(difficultProject); // создаем новый мобильный проект с определенной выше сложностью
-  //       console.log('mob ' + project);
-  //       mobilDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
-  //     }
-  //   }
-  // }
   getProjects() {
     let typeProject = chooseTypeProject();  // возвращает 'MOBIL' или 'WEB'
     console.log('typeProject   ' + typeProject);

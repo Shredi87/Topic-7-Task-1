@@ -25,3 +25,4 @@ export class MobilProject extends Project {
     this.typeProject = 'MOBIL';
   }
 }
+
