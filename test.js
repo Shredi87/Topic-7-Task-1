@@ -95,10 +95,9 @@ class WebDepartment extends Department {
 
   checkWorkSpace() {
     console.log('this web department');
-    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
-      developer.setWorkDay;
+      developer.setWorkDay();
       if (!project) project = 'empty';
       console.log(project);
       if (!developer) developer = 'empty';
@@ -168,11 +167,10 @@ class MobilDepartment extends Department {
   
   checkWorkSpace() {
     console.log('this mob department');
-    console.log(this.workSpace);
     if (this.workSpace.size === 0) console.log('Мапа пуста - никто не работает');
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
-      developer.setWorkDay;
+      developer.setWorkDay();
       if (!project) project = 'empty';
       console.log(project);
       if (!developer) developer = 'empty';
@@ -214,7 +212,6 @@ class TestDepartment extends Department {
 
   checkWorkSpace() {
     console.log('this test department');
-    console.log(this.workSpace);
     if (this.workSpace.size === 0) console.log('Мапа пуста - никто не работает');
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
