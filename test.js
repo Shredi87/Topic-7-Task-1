@@ -85,9 +85,9 @@ class WebDepartment extends Department {
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
     let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
     for (let i = 0; i < length; i++) {
-      let project = this.listWaitProject.shift();
-      let developer = this.listWaitDev.shift();
-      developer.setWorkDay();
+      let project = this.listWaitProject.pop();
+      let developer = this.listWaitDev.pop();
+      developer.setWorkDays(1);
       this.workSpace.set(project, developer);
     }
   
@@ -100,11 +100,12 @@ class WebDepartment extends Department {
       let developer = this.workSpace.get(project);
       console.log(project);
       console.log(developer);
-      if (project.difficultProject === developer.workDay) {
-        console.log('BINGOOOOO');        
+      if (project.difficultProject === developer.workDays) {
+        console.log('BINGOOOOO');   
+        developer.setCountProject();
+        developer.setWorkDays(0);     
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
-        developer.setCountProject();
         this.setCountFinishedProject(); 
         this.countWaitDays = 0;
         let difficultProject = 1;
@@ -115,8 +116,7 @@ class WebDepartment extends Department {
         console.log(testDepartment.getCountComingProject());
         console.log(developer);
       } else {
-        developer.setWorkDay();
-        this.setCountWaitDays();
+        developer.setWorkDays(1);
         console.log(developer);
       }
     }
@@ -131,34 +131,38 @@ class MobilDepartment extends Department {
   }
 
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
-    let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
+    if ((this.listWaitProject.length > 0) && (this.listWaitDev.length > 0)) {
+      let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
     
-    for (let i = 0; i < length; i++) {
-      let project = this.listWaitProject.shift();
-      let developer = this.listWaitDev.shift();
-      developer.setWorkDay();
-      let arrDeveloper = [developer];
-      this.workSpace.set(project, arrDeveloper);
-    }
-  
-    if (this.listWaitDev.length > 0) {
-      for (let i = 0; i < this.listWaitDev.length; i++) {
-        for (let project of this.workSpace.keys()) {
-          let additionalDeveloper = this.workSpace.get(project);
+      for (let i = 0; i < length; i++) {
+        let project = this.listWaitProject.pop();
+        let developer = this.listWaitDev.pop();
+        console.log(developer);
+        if (Array.isArray(developer)) developer = developer[0];
+        console.log(developer.workDays);
+        developer.setWorkDays(1);
+        let arrDeveloper = [];
+        arrDeveloper[0] = developer;
+        this.workSpace.set(project, arrDeveloper);
+      }
+
+      loop:
+      for (let project of this.workSpace.keys()) {
+        if (this.listWaitDev.length > 0) {
+          console.log(project);
+          let arrDeveloper = this.workSpace.get(project);
+          console.log(arrDeveloper);
+          let additionalDeveloper = this.listWaitDev.pop();
+          if (Array.isArray(additionalDeveloper)) additionalDeveloper = additionalDeveloper[0];
           console.log(additionalDeveloper);
-          switch (project.difficultProject - 1) {
-            case 0:
-              break;
-            case 1:
-              arrDeveloper = arrDeveloper.concat(additionalDeveloper);
-              break;
-            case 2:
-              if (this.listWaitDev.length = 2) {
-                arrDeveloper = arrDeveloper.concat(additionalDeveloper);
-              } 
-              arrDeveloper = arrDeveloper.concat(additionalDeveloper);
-              break;
-          } 
+          additionalDeveloper.setWorkDays(1);
+          arrDeveloper = arrDeveloper.concat(additionalDeveloper);
+          let efficiency;
+          for (let i = 0; i < arrDeveloper.length; i++) {
+            console.log(arrDeveloper[i].workDays);
+            efficiency += arrDeveloper[i].workDays;
+          }
+          if (project.difficultProject > efficiency) continue loop;
         }
       }
     }
@@ -172,14 +176,17 @@ class MobilDepartment extends Department {
       let efficiency = 0;
       console.log(project);
       for (let i = 0; i < arrDeveloper.length; i++) {
-        let developer = arrDeveloper[i].setWorkDay();
-        console.log(developer);
-        efficiency++;
+        console.log(arrDeveloper[i].workDays);
+        efficiency += arrDeveloper[i].workDays;
       }
-      if (project.difficultProject === efficiency) {
-        this.listWaitDev.push([...arrDeveloper]);
+      if (efficiency > project.difficultProject) console.log('AAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRRRRRRRRRRRMMMMMMMMMMMMMMMMM');
+      if (project.difficultProject = efficiency) {
+        for (let developer of arrDeveloper)  {
+          developer.setWorkDays(0);
+          developer.setCountProject();
+          this.listWaitDev.push(developer);
+        }
         this.workSpace.delete(project);
-        arrDeveloper.forEach(element => element.setCountProject()); 
         this.setCountFinishedProject(); 
         this.countWaitDays = 0;
         let difficultProject = 1;
@@ -189,8 +196,17 @@ class MobilDepartment extends Department {
         testDepartment.setCountComingProject();
         console.log(testDepartment.getCountComingProject());
       } else {
-        arrDeveloper[1].setCountProject();
+        if (arrDeveloper[1] != undefined) {
+          let freedomDeveloper = arrDeveloper.pop();
+          freedomDeveloper.setCountProject();
+          this.listWaitDev.push(freedomDeveloper);
+        }
+        
         arrDeveloper = arrDeveloper.splice(1);
+        if(arrDeveloper[0] != undefined) {
+          arrDeveloper[0].setWorkDays(1);
+        }
+        
         this.setCountWaitDays();
       }
     }
@@ -221,7 +237,6 @@ class TestDepartment extends Department {
       console.log(project);
       developer.setCountProject();
       console.log(developer);
-      console.log(developer.setCountProject());
       this.listWaitDev.push(developer);
       this.setCountFinishedProject();
       this.workSpace.delete(project);  
@@ -285,12 +300,16 @@ class Dev {
     this.countProject += 1;
   }
 
-  get workDay() {
+  get workDays() {
     return this.workDays;
   }
 
-  setWorkDay() {
-    this.workDays += 1;
+  setWorkDays(arg) {
+    if (arg === 0) {
+      this.workDays = 0;
+    } else {
+      this.workDays += 1;
+    }
   }
 }
 
@@ -455,7 +474,7 @@ if (webDepartment.workSpace.size  !== 0) {
 } else {
   console.log('All right');
 }
-workingOffice(5);
+workingOffice(15);
 
 function workingOffice(days) {
 
