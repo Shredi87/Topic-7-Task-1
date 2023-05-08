@@ -1,4 +1,4 @@
-import { TestProject } from "./project.js";
+import { addTestProject } from "./teamLead/concreteFactory.js";
 
 class Department {
   listWaitProject // очередь ожидающих проектов
@@ -89,7 +89,6 @@ class WebDepartment extends Department {
     for (let i = 0; i < length; i++) {
       let project = this.listWaitProject.pop();
       let developer = this.listWaitDev.pop();
-      console.log(developer);
       developer.setWorkDays(1);
       this.workSpace.set(project, developer);
     }
@@ -106,10 +105,7 @@ class WebDepartment extends Department {
         this.workSpace.delete(project);
         this.setCountFinishedProject(); 
         this.countWaitDays = 0;
-        let difficultProject = 1;
-        project = new TestProject(difficultProject);
-        testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
-        testDepartment.setCountComingProject();
+        addTestProject();
       } else {
         developer.setWorkDays(1);
       }
@@ -132,7 +128,6 @@ class MobilDepartment extends Department {
         let project = this.listWaitProject.pop();
         let developer = this.listWaitDev.pop();
         if (Array.isArray(developer)) developer = developer[0];
-        console.log(developer);
         developer.setWorkDays(1);
         let arrDeveloper = [];
         arrDeveloper[0] = developer;
@@ -174,10 +169,7 @@ class MobilDepartment extends Department {
         this.workSpace.delete(project);
         this.setCountFinishedProject(); 
         this.countWaitDays = 0;
-        let difficultProject = 1;
-        project = new TestProject(difficultProject);
-        testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
-        testDepartment.setCountComingProject();
+        addTestProject();
       } else {
         if (arrDeveloper[1] != undefined) {
           let freedomDeveloper = arrDeveloper.pop();

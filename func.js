@@ -1,5 +1,5 @@
 import { webDepartment, mobilDepartment, testDepartment } from "./classes/department.js";
-import { teamLead } from "./classes/teamLead.js";
+import { teamLead } from "./classes/teamLead/teamLead.js";
 
 
 const office = [webDepartment, mobilDepartment, testDepartment];
@@ -8,8 +8,6 @@ export function workingOffice(days) {
 
   for (let i = 1; i <= days; i++) {
     // Начало рабочего дня
-    console.log(`new work day ${i}`);
-
     office.forEach(department => {
       // Проверяем наличие законченных проектов и переводим освободившихся программистов в список простоя
       department.checkWorkSpace();
