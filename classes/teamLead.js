@@ -1,5 +1,5 @@
 import { WebProject, MobilProject } from "./project.js";
-import { WebDev, MobDev, TestDev } from "./developer.js";
+import { hireDev } from "./developer/abstractFactory.js";
 import { webDepartment, mobilDepartment } from "./department.js";
 
 class TeamLead {
@@ -9,28 +9,10 @@ class TeamLead {
     let typeProject = department.typeDepartment;
     if (department.listWaitProject.length > 0) {
       for (let i = 0; i < department.listWaitProject.length; i++) {
-        department.listWaitDev.push(this.hireDev(typeProject));
+        department.listWaitDev.push(hireDev(typeProject));
         department.setCountHireDev();
       }
     } 
-  }
-
-  // Метод найма программиста  --- проверен/исправен
-  hireDev(typeProject) {
-    let dev;
-    switch (typeProject) {
-      case 'WEB':
-        dev = new WebDev();
-        break;
-      case 'MOBIL':
-        dev = new MobDev();
-        break;
-      case 'TEST':
-        dev = new TestDev();
-        break;
-    }
-  
-    return dev;
   }
 
   getProjects() {
