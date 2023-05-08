@@ -1,15 +1,15 @@
 class Project {
-  #difficultProject
+  difficultProject
   constructor (difficultProject) {
-    this.#difficultProject = difficultProject;
+    this.difficultProject = difficultProject;
   }
 
   get difficultProject() {
-    return this.#difficultProject;
+    return this.difficultProject;
   }
 }
 
-export class WebProject extends Project {
+class WebProject extends Project {
   typeProject
   constructor(difficultProject) {
     super(difficultProject);
@@ -18,11 +18,19 @@ export class WebProject extends Project {
   
 }
 
-export class MobilProject extends Project {
+class MobilProject extends Project {
   typeProject
   constructor(difficultProject) {
     super(difficultProject);
     this.typeProject = 'MOBIL';
+  }
+}
+
+class TestProject extends Project {
+  typeProject
+  constructor(difficultProject) {
+    super(difficultProject);
+    this.typeProject = 'TEST';
   }
 }
 
