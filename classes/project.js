@@ -9,7 +9,7 @@ class Project {
   }
 }
 
-class WebProject extends Project {
+export class WebProject extends Project {
   typeProject
   constructor(difficultProject) {
     super(difficultProject);
@@ -18,7 +18,7 @@ class WebProject extends Project {
   
 }
 
-class MobilProject extends Project {
+export class MobilProject extends Project {
   typeProject
   constructor(difficultProject) {
     super(difficultProject);
@@ -26,7 +26,7 @@ class MobilProject extends Project {
   }
 }
 
-class TestProject extends Project {
+export class TestProject extends Project {
   typeProject
   constructor(difficultProject) {
     super(difficultProject);

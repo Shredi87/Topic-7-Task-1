@@ -1,6 +1,10 @@
+import { webDepartment, mobilDepartment, testDepartment } from "./classes/department.js";
+import { teamLead } from "./classes/teamLead.js";
+
+
 const office = [webDepartment, mobilDepartment, testDepartment];
 
-function workingOffice(days) {
+export function workingOffice(days) {
 
   for (let i = 1; i <= days; i++) {
     // Начало рабочего дня

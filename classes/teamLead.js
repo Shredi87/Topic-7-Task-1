@@ -1,3 +1,6 @@
+import { WebProject, MobilProject } from "./project.js";
+import { WebDev, MobDev, TestDev } from "./developer.js";
+
 class TeamLead {
 
   // Метод служит для проверки очереди накопившихся проектов
