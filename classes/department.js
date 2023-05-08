@@ -89,7 +89,7 @@ class WebDepartment extends Department {
     for (let i = 0; i < length; i++) {
       let project = this.listWaitProject.pop();
       let developer = this.listWaitDev.pop();
-      developer.upDays();
+      developer.setWorkDays(1);
       this.workSpace.set(project, developer);
     }
   
@@ -99,14 +99,15 @@ class WebDepartment extends Department {
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
       if (project.difficultProject === developer.workDays) {   
-        developer.upCount(0);
+        developer.setCountProject();
+        developer.setWorkDays(0);     
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
         this.setCountFinishedProject(); 
         this.countWaitDays = 0;
         addTestProject();
       } else {
-        developer.upDays();
+        developer.setWorkDays(1);
       }
     }
   }
@@ -127,7 +128,7 @@ class MobilDepartment extends Department {
         let project = this.listWaitProject.pop();
         let developer = this.listWaitDev.pop();
         if (Array.isArray(developer)) developer = developer[0];
-        developer.upDays();
+        developer.setWorkDays(1);
         let arrDeveloper = [];
         arrDeveloper[0] = developer;
         this.workSpace.set(project, arrDeveloper);
@@ -160,7 +161,8 @@ class MobilDepartment extends Department {
       }
       if (project.difficultProject = efficiency) {
         for (let developer of arrDeveloper)  {
-          developer.upCount(0);
+          developer.setWorkDays(0);
+          developer.setCountProject();
           this.listWaitDev.push(developer);
         }
         this.workSpace.delete(project);
@@ -176,8 +178,7 @@ class MobilDepartment extends Department {
         
         arrDeveloper = arrDeveloper.splice(1);
         if(arrDeveloper[0] != undefined) {
-          let developer = arrDeveloper[0];
-          developer.upDays();
+          arrDeveloper[0].setWorkDays(1);
         }
         
         this.setCountWaitDays();

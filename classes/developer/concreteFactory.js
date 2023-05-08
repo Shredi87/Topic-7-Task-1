@@ -1,13 +1,13 @@
-import { WebDev, MobDev, TestDev, DevFacade } from "./developer.js";
+import { WebDev, MobDev, TestDev } from "./developer.js";
 
 export function hireWebDev() {
-  return new DevFacade(new WebDev());
+  return new WebDev();
 }
 
 export function hireMobDev() {
-  return new DevFacade(new MobDev());
+  return new MobDev();
 }
 
 export function hireTestDev() {
-  return new DevFacade(new TestDev());
+  return new TestDev();
 }
