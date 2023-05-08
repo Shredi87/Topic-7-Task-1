@@ -45,3 +45,18 @@ export class TestDev extends Dev {
     super();
   }
 }
+
+export class DevFacade {
+  constructor(dev) {
+    this.dev = dev;
+  }
+  
+  upCount() {
+    this.dev.setCountProject();
+    this.dev.setWorkDays(0);
+  }
+
+  upDays() {
+    this.dev.setWorkDays(1);
+  }
+}
