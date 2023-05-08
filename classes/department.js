@@ -245,4 +245,9 @@ class TestDepartment extends Department {
   
 }
 
-let sortFunc = (a, b) => {a.countProject - b.countProject}
+let sortFunc = (a, b) => {a.countProject - b.countProject};
+
+let webDepartment = new WebDepartment();
+let mobilDepartment = new MobilDepartment();
+let testDepartment= new TestDepartment();
+
