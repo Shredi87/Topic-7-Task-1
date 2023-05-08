@@ -1,36 +1,36 @@
-import { testDepartment } from "../func.js"
-
 class Department {
   listWaitProject // очередь ожидающих проектов
   workSpace // список проектов в работе
   listWaitDev // список простаивающих программистов
   typeDepartment // тип отдела
-  #countWaitDays // счетчик дней простоя программистов
-  #countFinishedProject // количество законченных проектов
-  #countHireDev // количество нанятых разработчиков
-  #countRemoveDev // коичество уволенных разработчиков
+  countWaitDays // счетчик дней простоя программистов
+  countFinishedProject // количество законченных проектов
+  countHireDev // количество нанятых разработчиков
+  countRemoveDev // коичество уволенных разработчиков
+  countComingProject // список входящих проектов
 
   constructor() {
     this.listWaitProject = [];
     this.workSpace = new Map();
     this.listWaitDev = [];
-    this.#countWaitDays = 0;
-    this.#countFinishedProject = 0;
-    this.#countHireDev = 0;
-    this.#countRemoveDev = 0;
+    this.countWaitDays = 0;
+    this.countFinishedProject = 0;
+    this.countHireDev = 0;
+    this.countRemoveDev = 0;
+    this.countComingProject = 0;
   }
 
   get countWaitDays() {
-    return this.#countWaitDays;
+    return this.countWaitDays;
   }
 
   setCountWaitDays(waitDays) {
     if (waitDays === 0) {
-      this.#countWaitDays = 0;
+      this.countWaitDays = 0;
     } else if (waitDays === 3) {
-      this.#countWaitDays = 3;
+      this.countWaitDays = 3;
     } else {
-      this.#countWaitDays += 1;
+      this.countWaitDays += 1;
     }
   }
 
@@ -43,31 +43,39 @@ class Department {
   }
 
   getCountFinishedProject() {
-    return this.#countFinishedProject;
+    return this.countFinishedProject;
   }
 
   setCountFinishedProject() {
-    this.#countFinishedProject += 1;
+    this.countFinishedProject += 1;
+  }
+
+  getCountComingProject() {
+    return this.countComingProject;
+  }
+
+  setCountComingProject() {
+    this.countComingProject += 1;
   }
 
   getCountHireDev() {
-    return this.#countHireDev;
+    return this.countHireDev;
   }
 
   setCountHireDev() {
-    this.#countHireDev += 1;
+    this.countHireDev += 1;
   }
 
   getCountRemoveDev() {
-    return this.#countRemoveDev;
+    return this.countRemoveDev;
   }
 
   setCountRemoveDev() {
-    this.#countRemoveDev += 1;
+    this.countRemoveDev += 1;
   }
 }
 
-export class WebDepartment extends Department {
+class WebDepartment extends Department {
 
   constructor() {
     super();
@@ -77,27 +85,45 @@ export class WebDepartment extends Department {
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
     let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
     for (let i = 0; i < length; i++) {
-      this.listWaitDev[i].setWorkDay();
-      this.workSpace.set(this.listWaitProject[i], this.listWaitDev[i]);
+      let project = this.listWaitProject.pop();
+      let developer = this.listWaitDev.pop();
+      developer.setWorkDays(1);
+      this.workSpace.set(project, developer);
     }
+  
   }
 
   checkWorkSpace() {
-    for (let [project, developer] of this.workSpace) {
-      if (project.difficultProject === developer.workDay) {
-        testDepartment.listWaitDev.push(project);
+    console.log('this web department');
+    console.log(this.workSpace);
+    for (let project of this.workSpace.keys()) {
+      let developer = this.workSpace.get(project);
+      console.log(project);
+      console.log(developer);
+      if (project.difficultProject === developer.workDays) {
+        console.log('BINGOOOOO');   
+        developer.setCountProject();
+        developer.setWorkDays(0);     
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
-        developer.setCountProject();
         this.setCountFinishedProject(); 
+        this.countWaitDays = 0;
+        let difficultProject = 1;
+        project = new TestProject(difficultProject);
+        console.log(project);
+        testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        testDepartment.setCountComingProject();
+        console.log(testDepartment.getCountComingProject());
+        console.log(developer);
+      } else {
+        developer.setWorkDays(1);
+        console.log(developer);
       }
-
-      this.setCountWaitDays();
     }
   }
 }
 
-export class MobilDepartment extends Department {
+class MobilDepartment extends Department {
 
   constructor() {
     super();
@@ -105,55 +131,89 @@ export class MobilDepartment extends Department {
   }
 
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
-    let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
+    if ((this.listWaitProject.length > 0) && (this.listWaitDev.length > 0)) {
+      let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
     
-    for (let i = 0; i < length; i++) {
-      this.listWaitDev[i].setWorkDay();
-      this.workSpace.set(this.listWaitProject[i], [this.listWaitDev[i]]);
-    }
-  
-    if (this.listWaitDev.length > 0) {
-      for (let i = 0; i < this.listWaitDev.length; i++) {
-        for (let [project, developer] of this.workSpace) {
-          let addDev = () => {
-            let moveDev = this.listWaitDev.shift(); 
-            this.workSpace.set(project, developer.push(moveDev));
-          };
-          switch (project.difficultProject - 1) {
-            case 0:
-              break;
-            case 1:
-              addDev();
-              break;
-            case 2:
-              if (this.listWaitDev.length = 2) {
-                addDev();
-              } 
-              addDev();
-              break;
-          } 
-          
+      for (let i = 0; i < length; i++) {
+        let project = this.listWaitProject.pop();
+        let developer = this.listWaitDev.pop();
+        console.log(developer);
+        if (Array.isArray(developer)) developer = developer[0];
+        console.log(developer.workDays);
+        developer.setWorkDays(1);
+        let arrDeveloper = [];
+        arrDeveloper[0] = developer;
+        this.workSpace.set(project, arrDeveloper);
+      }
+
+      loop:
+      for (let project of this.workSpace.keys()) {
+        if (this.listWaitDev.length > 0) {
+          console.log(project);
+          let arrDeveloper = this.workSpace.get(project);
+          console.log(arrDeveloper);
+          let additionalDeveloper = this.listWaitDev.pop();
+          if (Array.isArray(additionalDeveloper)) additionalDeveloper = additionalDeveloper[0];
+          console.log(additionalDeveloper);
+          additionalDeveloper.setWorkDays(1);
+          arrDeveloper = arrDeveloper.concat(additionalDeveloper);
+          let efficiency;
+          for (let i = 0; i < arrDeveloper.length; i++) {
+            console.log(arrDeveloper[i].workDays);
+            efficiency += arrDeveloper[i].workDays;
+          }
+          if (project.difficultProject > efficiency) continue loop;
         }
       }
     }
   }
   
   checkWorkSpace() {
-    for (let [project, developer] of this.workSpace) {
-      if (project.difficultProject === developer.workDay) {
-        testDepartment.listWaitDev.push(project);
-        this.listWaitDev.push(developer);
-        this.workSpace.delete(project);
-        developer.setCountProject();
-        this.setCountFinishedProject()  
+    console.log('this mob department');
+    console.log(this.workSpace);
+    for (let project of this.workSpace.keys()) {
+      let arrDeveloper = this.workSpace.get(project);
+      let efficiency = 0;
+      console.log(project);
+      for (let i = 0; i < arrDeveloper.length; i++) {
+        console.log(arrDeveloper[i].workDays);
+        efficiency += arrDeveloper[i].workDays;
       }
-
-      this.setCountWaitDays();
+      if (efficiency > project.difficultProject) console.log('AAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRRRRRRRRRRRMMMMMMMMMMMMMMMMM');
+      if (project.difficultProject = efficiency) {
+        for (let developer of arrDeveloper)  {
+          developer.setWorkDays(0);
+          developer.setCountProject();
+          this.listWaitDev.push(developer);
+        }
+        this.workSpace.delete(project);
+        this.setCountFinishedProject(); 
+        this.countWaitDays = 0;
+        let difficultProject = 1;
+        project = new TestProject(difficultProject);
+        console.log(project);
+        testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
+        testDepartment.setCountComingProject();
+        console.log(testDepartment.getCountComingProject());
+      } else {
+        if (arrDeveloper[1] != undefined) {
+          let freedomDeveloper = arrDeveloper.pop();
+          freedomDeveloper.setCountProject();
+          this.listWaitDev.push(freedomDeveloper);
+        }
+        
+        arrDeveloper = arrDeveloper.splice(1);
+        if(arrDeveloper[0] != undefined) {
+          arrDeveloper[0].setWorkDays(1);
+        }
+        
+        this.setCountWaitDays();
+      }
     }
   }
 }
 
-export class TestDepartment extends Department {
+class TestDepartment extends Department {
 
   constructor() {
     super();
@@ -163,21 +223,26 @@ export class TestDepartment extends Department {
   fillWorkSpace() { // организовываем рабочее пространство (наполняем мапу)
     let length = (this.listWaitProject.length <= this.listWaitDev.length) ? this.listWaitProject.length : this.listWaitDev.length;
     for (let i = 0; i < length; i++) {
-      this.listWaitDev[i].setWorkDay();
-      this.workSpace.set(this.listWaitProject[i], this.listWaitDev[i]);
+      let project = this.listWaitProject.shift();
+      let developer = this.listWaitDev.shift();
+      this.workSpace.set(project, developer);
     }
   }
 
   checkWorkSpace() {
+    console.log('this test department');
+    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
+      console.log(project);
       developer.setCountProject();
+      console.log(developer);
       this.listWaitDev.push(developer);
       this.setCountFinishedProject();
       this.workSpace.delete(project);  
     }
   }
-
+  
 }
 
 let sortFunc = (a, b) => {a.countProject - b.countProject}
