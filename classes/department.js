@@ -89,6 +89,7 @@ class WebDepartment extends Department {
     for (let i = 0; i < length; i++) {
       let project = this.listWaitProject.pop();
       let developer = this.listWaitDev.pop();
+      console.log(developer);
       developer.setWorkDays(1);
       this.workSpace.set(project, developer);
     }
@@ -131,6 +132,7 @@ class MobilDepartment extends Department {
         let project = this.listWaitProject.pop();
         let developer = this.listWaitDev.pop();
         if (Array.isArray(developer)) developer = developer[0];
+        console.log(developer);
         developer.setWorkDays(1);
         let arrDeveloper = [];
         arrDeveloper[0] = developer;

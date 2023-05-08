@@ -3,13 +3,10 @@ import { hireWebDev, hireMobDev, hireTestDev } from "./concreteFactory.js";
 export function hireDev(typeProject) {
   switch (typeProject) {
     case 'WEB':
-      hireWebDev();
-      break;
+      return hireWebDev();
     case 'MOBIL':
-      hireMobDev();
-      break;
+      return hireMobDev();
     case 'TEST':
-      hireTestDev();
-      break;
+      return hireTestDev();
   }
 }
