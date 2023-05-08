@@ -94,14 +94,9 @@ class WebDepartment extends Department {
   }
 
   checkWorkSpace() {
-    console.log('this web department');
-    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
-      console.log(project);
-      console.log(developer);
-      if (project.difficultProject === developer.workDays) {
-        console.log('BINGOOOOO');   
+      if (project.difficultProject === developer.workDays) {   
         developer.setCountProject();
         developer.setWorkDays(0);     
         this.listWaitDev.push(developer);
@@ -110,14 +105,10 @@ class WebDepartment extends Department {
         this.countWaitDays = 0;
         let difficultProject = 1;
         project = new TestProject(difficultProject);
-        console.log(project);
         testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
         testDepartment.setCountComingProject();
-        console.log(testDepartment.getCountComingProject());
-        console.log(developer);
       } else {
         developer.setWorkDays(1);
-        console.log(developer);
       }
     }
   }
@@ -137,9 +128,7 @@ class MobilDepartment extends Department {
       for (let i = 0; i < length; i++) {
         let project = this.listWaitProject.pop();
         let developer = this.listWaitDev.pop();
-        console.log(developer);
         if (Array.isArray(developer)) developer = developer[0];
-        console.log(developer.workDays);
         developer.setWorkDays(1);
         let arrDeveloper = [];
         arrDeveloper[0] = developer;
@@ -149,17 +138,13 @@ class MobilDepartment extends Department {
       loop:
       for (let project of this.workSpace.keys()) {
         if (this.listWaitDev.length > 0) {
-          console.log(project);
           let arrDeveloper = this.workSpace.get(project);
-          console.log(arrDeveloper);
           let additionalDeveloper = this.listWaitDev.pop();
           if (Array.isArray(additionalDeveloper)) additionalDeveloper = additionalDeveloper[0];
-          console.log(additionalDeveloper);
           additionalDeveloper.setWorkDays(1);
           arrDeveloper = arrDeveloper.concat(additionalDeveloper);
           let efficiency;
           for (let i = 0; i < arrDeveloper.length; i++) {
-            console.log(arrDeveloper[i].workDays);
             efficiency += arrDeveloper[i].workDays;
           }
           if (project.difficultProject > efficiency) continue loop;
@@ -169,14 +154,10 @@ class MobilDepartment extends Department {
   }
   
   checkWorkSpace() {
-    console.log('this mob department');
-    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let arrDeveloper = this.workSpace.get(project);
       let efficiency = 0;
-      console.log(project);
       for (let i = 0; i < arrDeveloper.length; i++) {
-        console.log(arrDeveloper[i].workDays);
         efficiency += arrDeveloper[i].workDays;
       }
       if (efficiency > project.difficultProject) console.log('AAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRRRRRRRRRRRMMMMMMMMMMMMMMMMM');
@@ -191,10 +172,8 @@ class MobilDepartment extends Department {
         this.countWaitDays = 0;
         let difficultProject = 1;
         project = new TestProject(difficultProject);
-        console.log(project);
         testDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
         testDepartment.setCountComingProject();
-        console.log(testDepartment.getCountComingProject());
       } else {
         if (arrDeveloper[1] != undefined) {
           let freedomDeveloper = arrDeveloper.pop();
@@ -230,13 +209,9 @@ class TestDepartment extends Department {
   }
 
   checkWorkSpace() {
-    console.log('this test department');
-    console.log(this.workSpace);
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
-      console.log(project);
       developer.setCountProject();
-      console.log(developer);
       this.listWaitDev.push(developer);
       this.setCountFinishedProject();
       this.workSpace.delete(project);  
@@ -247,7 +222,7 @@ class TestDepartment extends Department {
 
 let sortFunc = (a, b) => {a.countProject - b.countProject};
 
-let webDepartment = new WebDepartment();
-let mobilDepartment = new MobilDepartment();
-let testDepartment= new TestDepartment();
+export let webDepartment = new WebDepartment();
+export let mobilDepartment = new MobilDepartment();
+export let testDepartment= new TestDepartment();
 
