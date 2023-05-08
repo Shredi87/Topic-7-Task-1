@@ -23,17 +23,13 @@ class TeamLead {
       let difficultProject = chooseDifficultProject(); // возвращает сложность для каждого проекта от 1 до 3
       if (typeProject === 'WEB') { // если тип проекта веб
         let project = new WebProject(difficultProject); // создаем новый веб проект с определенной выше сложностью
-        console.log(project);
         webDepartment.listWaitProject.push(project); // и добавляем его в массив веб проектов созданных этим днем
         webDepartment.setCountComingProject();
-        console.log(webDepartment.getCountComingProject());
       } 
       if (typeProject === 'MOBIL') { // если тип проекта мобильный
         let project = new MobilProject(difficultProject); // создаем новый мобильный проект с определенной выше сложностью
-        console.log(project);
         mobilDepartment.listWaitProject.push(project); // и добавляем его в массив мобильных проектов созданных этим днем
         mobilDepartment.setCountComingProject();
-        console.log(mobilDepartment.getCountComingProject());
       }
     }
   }
