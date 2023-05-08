@@ -1,49 +1,33 @@
+const office = [webDepartment, mobilDepartment, testDepartment];
+
 function workingOffice(days) {
 
   for (let i = 1; i <= days; i++) {
     // Начало рабочего дня
     console.log(`new work day ${i}`);
-    // Проверяем наличие законченных проектов и переводим освободившихся программистов в список простоя
-    //office.forEach(department => department.checkWorkSpace());
-    webDepartment.checkWorkSpace();
-    mobilDepartment.checkWorkSpace();
-    testDepartment.checkWorkSpace();
 
-
-    // Отправляем в работу оставшиеся со вчера проекты и освободившихся разработчиков
-    //office.forEach(department => department.fillWorkSpace());
-    webDepartment.fillWorkSpace();
-    mobilDepartment.fillWorkSpace();
-    testDepartment.fillWorkSpace();
-
-    // Проверяем наличие проектов в списке ожидания и нанимаем на них программистов
-    //office.forEach(department => teamLead.checkStack(department));
-    teamLead.checkStack(webDepartment);
-    teamLead.checkStack(mobilDepartment);
-    teamLead.checkStack(testDepartment);
+    office.forEach(department => {
+      // Проверяем наличие законченных проектов и переводим освободившихся программистов в список простоя
+      department.checkWorkSpace();
+      // Отправляем в работу оставшиеся со вчера проекты и освободившихся разработчиков
+      department.fillWorkSpace();
+      // Проверяем наличие проектов в списке ожидания и нанимаем на них программистов
+      teamLead.checkStack(department);
+    });
 
     // Директор генерирует новые проекты
     teamLead.getProjects();
 
 
-    // Отправляем в работу новые проекты со свободными разработчиками
-    //office.forEach(department => department.fillWorkSpace());
-    webDepartment.fillWorkSpace();
-    mobilDepartment.fillWorkSpace();
-    testDepartment.fillWorkSpace();
-
-    // Сортируем списки простоя программистов по количеству проектов
-    // office.forEach(department => department.sortListWaitDev());
-    webDepartment.sortListWaitDev();
-    mobilDepartment.sortListWaitDev();
-    testDepartment.sortListWaitDev();
-
-    // Проверяем необходимость увольнения программистов
-    // office.forEach(department => checkNeedRemoveDev(department));
-    checkNeedRemoveDev(webDepartment);
-    checkNeedRemoveDev(mobilDepartment);
-    checkNeedRemoveDev(testDepartment);
-
+    
+    office.forEach(department => {
+      // Отправляем в работу новые проекты со свободными разработчиками
+      department.fillWorkSpace();
+      // Сортируем списки простоя программистов по количеству проектов
+      department.sortListWaitDev();
+      // Проверяем необходимость увольнения программистов
+      checkNeedRemoveDev(department);
+    });
   }
 
   return console.log(`За ${days} дней было сформировано: 
@@ -77,31 +61,3 @@ function checkNeedRemoveDev(department) {
   return; // выходим из функции
 }
 
-// Функция-рандомайзер используется в соответствующих проектах для определения:
-// 1. типов проектов (веб|мобильные) в функции chooseTypeProject
-// 2. количества проектов (от 0 до 4) в функции chooseQuantityProjects
-// 3. сложности проектов (от 1 до 3) для каждого проекта выбираются отдельно chooseDifficultProject
-function randomInteger(min, max) {
-  let rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
-}
-
-// 1. Выбор типа проектов
-// Тип проектов поступивших в один день может быть только веб или только мобильные
-// где 0 - веб-проекты, а 1 - мобильные проекты.
-function chooseTypeProject() {
-  let typeProject = randomInteger(0, 1);
-  return (typeProject === 1) ? 'MOBIL' : 'WEB';
-}
-
-// 2. Определение количества проектов
-function chooseQuantityProjects() {
-  let quantityProjects = randomInteger(0, 4);
-  return quantityProjects;
-}
-
-// 3. Определение сложности каждого проекта
-function chooseDifficultProject() {
-  let difficultProject = randomInteger(1, 3);
-  return difficultProject;
-}
