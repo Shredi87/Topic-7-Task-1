@@ -1,42 +1,46 @@
 class Dev {
-  #countProject
-  #workDays
+  countProject
+  workDays
   
   constructor() {
-    this.#countProject = 0;
-    this.#workDays = 0;
+    this.countProject = 0;
+    this.workDays = 0;
   }
 
   get countProject() {
-    return this.#countProject;
+    return this.countProject;
   }
 
   setCountProject() {
-    this.#countProject += 1;
+    this.countProject += 1;
   }
 
-  get workDay() {
-    return this.#workDays;
+  get workDays() {
+    return this.workDays;
   }
 
-  setWorkDay() {
-    this.#workDays += 1;
+  setWorkDays(arg) {
+    if (arg === 0) {
+      this.workDays = 0;
+    } else {
+      this.workDays += 1;
+    }
   }
 }
 
-export class MobDev extends Dev {
+class MobDev extends Dev {
   constructor() {
     super();
   }
 }
 
-export class WebDev extends Dev {
+class WebDev extends Dev {
   constructor() {
     super();
   }
 }
 
-export class TestDev extends Dev {
+class TestDev extends Dev {
   constructor() {
     super();
   }
