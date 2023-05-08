@@ -89,7 +89,7 @@ class WebDepartment extends Department {
     for (let i = 0; i < length; i++) {
       let project = this.listWaitProject.pop();
       let developer = this.listWaitDev.pop();
-      developer.setWorkDays(1);
+      developer.upDays();
       this.workSpace.set(project, developer);
     }
   
@@ -99,15 +99,14 @@ class WebDepartment extends Department {
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
       if (project.difficultProject === developer.workDays) {   
-        developer.setCountProject();
-        developer.setWorkDays(0);     
+        developer.upCount()    
         this.listWaitDev.push(developer);
         this.workSpace.delete(project);
         this.setCountFinishedProject(); 
         this.countWaitDays = 0;
         addTestProject();
       } else {
-        developer.setWorkDays(1);
+        developer.upDays();
       }
     }
   }
@@ -128,7 +127,7 @@ class MobilDepartment extends Department {
         let project = this.listWaitProject.pop();
         let developer = this.listWaitDev.pop();
         if (Array.isArray(developer)) developer = developer[0];
-        developer.setWorkDays(1);
+        developer.upDays();
         let arrDeveloper = [];
         arrDeveloper[0] = developer;
         this.workSpace.set(project, arrDeveloper);
@@ -161,8 +160,7 @@ class MobilDepartment extends Department {
       }
       if (project.difficultProject = efficiency) {
         for (let developer of arrDeveloper)  {
-          developer.setWorkDays(0);
-          developer.setCountProject();
+          developer.upCount();
           this.listWaitDev.push(developer);
         }
         this.workSpace.delete(project);
@@ -180,7 +178,7 @@ class MobilDepartment extends Department {
         if(arrDeveloper[0] != undefined) {
           arrDeveloper[0].setWorkDays(1);
         }
-        
+
         this.setCountWaitDays();
       }
     }
