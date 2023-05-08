@@ -1,5 +1,6 @@
 import { WebProject, MobilProject } from "./project.js";
 import { WebDev, MobDev, TestDev } from "./developer.js";
+import { webDepartment, mobilDepartment } from "./department.js";
 
 class TeamLead {
 
@@ -34,14 +35,10 @@ class TeamLead {
 
   getProjects() {
     let typeProject = chooseTypeProject();  // возвращает 'MOBIL' или 'WEB'
-    console.log('typeProject   ' + typeProject);
     let quantityProjects = chooseQuantityProjects(); // возвращает целое число от 0 до 4
-    console.log('quantityProjects   ' + quantityProjects);
-    console.log('_______________________________________________________________________________________________________');
     // Прогоняем цикл на создание проектов в зависимости от количества проектов. Если количество проектов равно нуля - цикл не запускается.
     for (let i = 0; i < quantityProjects; i++) {
       let difficultProject = chooseDifficultProject(); // возвращает сложность для каждого проекта от 1 до 3
-      console.log('difficultProject   ' + difficultProject);
       if (typeProject === 'WEB') { // если тип проекта веб
         let project = new WebProject(difficultProject); // создаем новый веб проект с определенной выше сложностью
         console.log(project);

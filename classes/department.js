@@ -1,3 +1,5 @@
+import { TestProject } from "./project.js";
+
 class Department {
   listWaitProject // очередь ожидающих проектов
   workSpace // список проектов в работе
