@@ -31,7 +31,7 @@ export function workingOffice(days) {
       checkNeedRemoveDev(department);
     });
   }
-
+  
   return console.log(`За ${days} дней было сформировано: 
   // ${webDepartment.getCountComingProject()} веб проектов,
   // ${mobilDepartment.getCountComingProject()} мобильных проектов,
