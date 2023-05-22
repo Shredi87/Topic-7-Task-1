@@ -7,7 +7,7 @@ class Dev {
     this.workDays = 0;
   }
 
-  get countProject() {
+  getCountProject() {
     return this.countProject;
   }
 
@@ -15,7 +15,7 @@ class Dev {
     this.countProject += 1;
   }
 
-  get workDays() {
+  getWorkDays() {
     return this.workDays;
   }
 

@@ -4,7 +4,7 @@ class Project {
     this.difficultProject = difficultProject;
   }
 
-  get difficultProject() {
+  getDifficultProject() {
     return this.difficultProject;
   }
 }

@@ -5,7 +5,7 @@ class TeamLead {
 
   // Метод служит для проверки очереди накопившихся проектов
   checkStack(department) {
-    let typeProject = department.typeDepartment;
+    let typeProject = department.getTypeDepartment();
     if (department.listWaitProject.length > 0) {
       for (let i = 0; i < department.listWaitProject.length; i++) {
         department.listWaitDev.push(hireDev(typeProject));

@@ -45,7 +45,7 @@ export function workingOffice(days) {
 // при верном условии запускает метод увольнения программиста
 // также следит за изменением счетчика дней простоя программистов в отделе (department.countWaitDays)
 function checkNeedRemoveDev(department) {
-  let waitDays = department.countWaitDays; // количество дней простоя берем из отдела
+  let waitDays = department.getCountWaitDays(); // количество дней простоя берем из отдела
 
   if (department.listWaitDev.length > 0) { // если в списке простоя есть хоть кто-то
     if (waitDays === 3) { // проверяем равен ли простой программистов трем дням

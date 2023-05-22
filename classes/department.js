@@ -22,7 +22,7 @@ class Department {
     this.countComingProject = 0;
   }
 
-  get countWaitDays() {
+  getCountWaitDays() {
     return this.countWaitDays;
   }
 
@@ -36,7 +36,7 @@ class Department {
     }
   }
 
-  get typeDepartment() {
+  getTypeDepartment() {
     return this.typeDepartment;
   }
 
@@ -98,7 +98,7 @@ class WebDepartment extends Department {
   checkWorkSpace() {
     for (let project of this.workSpace.keys()) {
       let developer = this.workSpace.get(project);
-      if (project.difficultProject === developer.workDays) {   
+      if (project.getDifficultProject() === developer.getWorkDays()) {   
         developer.setCountProject();
         developer.setWorkDays(0);     
         this.listWaitDev.push(developer);
@@ -144,9 +144,9 @@ class MobilDepartment extends Department {
           arrDeveloper = arrDeveloper.concat(additionalDeveloper);
           let efficiency;
           for (let i = 0; i < arrDeveloper.length; i++) {
-            efficiency += arrDeveloper[i].workDays;
+            efficiency += arrDeveloper[i].getWorkDays();
           }
-          if (project.difficultProject > efficiency) continue loop;
+          if (project.getDifficultProject() > efficiency) continue loop;
         }
       }
     }
@@ -157,9 +157,9 @@ class MobilDepartment extends Department {
       let arrDeveloper = this.workSpace.get(project);
       let efficiency = 0;
       for (let i = 0; i < arrDeveloper.length; i++) {
-        efficiency += arrDeveloper[i].workDays;
+        efficiency += arrDeveloper[i].getWorkDays();
       }
-      if (project.difficultProject = efficiency) {
+      if (project.getDifficultProject() == efficiency) {
         for (let developer of arrDeveloper)  {
           developer.setWorkDays(0);
           developer.setCountProject();
@@ -215,7 +215,7 @@ class TestDepartment extends Department {
   
 }
 
-let sortFunc = (a, b) => {a.countProject - b.countProject};
+let sortFunc = (a, b) => {a.getCountProject() - b.getCountProject()};
 
 export let webDepartment = new WebDepartment();
 export let mobilDepartment = new MobilDepartment();
